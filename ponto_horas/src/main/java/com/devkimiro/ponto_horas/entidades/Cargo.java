@@ -1,6 +1,6 @@
 package com.devkimiro.ponto_horas.entidades;
 
-import java.time.LocalDateTime;
+import java.sql.Time;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,12 +34,11 @@ public class Cargo {
     @NotNull(message = "O nome do cargo não pode ser vazio!")
     private String nomeCargo;
 
-    @NotBlank(message = "O salário do cargo não pode ser enviado em branco!")
     @NotNull(message = "O salário do cargo não pode ser vazio!")
     private double salario;
 
     @Column(name = "carga_horaria")
-    @JsonFormat(pattern = "yyyy-MM-DD HH-mm-ss", shape = Shape.STRING)
-    private LocalDateTime cargaHoraria;
+    @JsonFormat(pattern = "HH-mm-ss", shape = Shape.STRING)
+    private Time cargaHoraria;
     
 }
