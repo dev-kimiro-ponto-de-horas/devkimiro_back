@@ -28,6 +28,11 @@ public class CargoServico {
         return cargo.get();
     }
 
+    public Cargo buscarCargoPorNome (String nomeCargo){
+        Optional<Cargo> cargoEncontrado = cargoRepositorio.findByNomeCargo(nomeCargo);
+        return cargoEncontrado.get();
+    }
+
     public Cargo atualizarCargo(Cargo cargo, Long id){
         Cargo cargoAntigo = buscarCargoPorId(id);
         cargo.setId(cargoAntigo.getId());
