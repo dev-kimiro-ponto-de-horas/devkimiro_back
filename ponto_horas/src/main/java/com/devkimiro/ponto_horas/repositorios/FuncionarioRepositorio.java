@@ -11,6 +11,9 @@ import com.devkimiro.ponto_horas.entidades.Funcionario;
 @Repository
 public interface FuncionarioRepositorio extends JpaRepository<Funcionario, Long> {
     
-    @Query(value = "SELECT u FROM BaseUser u WHERE cracha = :cracha")
+    @Query(value = "SELECT u FROM Funcionario u WHERE cracha = :cracha")
     Optional<Funcionario> findByCracha(String cracha);
+
+    @Query(value = "SELECT u FROM Funcionario u WHERE email = :email")
+    Optional<Funcionario> findByEmail(String email);
 }
