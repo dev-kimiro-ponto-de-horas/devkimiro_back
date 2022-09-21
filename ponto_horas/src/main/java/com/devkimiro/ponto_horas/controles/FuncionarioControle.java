@@ -35,17 +35,29 @@ public class FuncionarioControle {
 
     @GetMapping("{id}")
     public ResponseEntity<Funcionario> buscarFuncionarioPorId (@PathVariable Long id){
+        try{
         return ResponseEntity.ok(funcionarioServico.buscarFuncionarioPorId(id));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/cracha/{cracha}")
     public ResponseEntity<Funcionario> buscarFuncionarioPorCracha (@PathVariable String cracha){
+        try{
         return ResponseEntity.ok(funcionarioServico.buscarFuncionarioPorCracha(cracha));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<Funcionario> buscarFuncionarioPorEmail (@PathVariable String email){
+        try{
         return ResponseEntity.ok(funcionarioServico.buscarFuncionarioPorEmail(email));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("{id}")
@@ -54,7 +66,11 @@ public class FuncionarioControle {
     }
 
     public ResponseEntity<?> deletarFuncionario (@PathVariable Long id){
+        try{
         funcionarioServico.deletarFuncionario(id);
         return ResponseEntity.ok().build();
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 }
