@@ -23,13 +23,23 @@ public class UsuarioSistemaServico {
         return usuarioSistemaRepositorio.save(usuario);
     }
 
-    public UsuarioSistema buscarUsuario (Long id){
+    public UsuarioSistema buscarUsuarioPorId (Long id){
         Optional<UsuarioSistema> usuario = usuarioSistemaRepositorio.findById(id);
         return usuario.get();
     }
 
+    public UsuarioSistema buscarUsuarioPorLogin (String login){
+        Optional<UsuarioSistema> usuario = usuarioSistemaRepositorio.findByLogin(login);
+        return usuario.get();
+    }
+
+    public UsuarioSistema buscarUsuarioPorEmail (String email){
+        Optional<UsuarioSistema> usuario = usuarioSistemaRepositorio.findByEmail(email);
+        return usuario.get();
+    }
+
     public UsuarioSistema  atualizarUsuario (UsuarioSistema usuario, Long id){
-        UsuarioSistema usuarioAntigo = buscarUsuario(id);
+        UsuarioSistema usuarioAntigo = buscarUsuarioPorId(id);
         usuario.setId(usuarioAntigo.getId());
         return criarUsuario(usuario);
     }
