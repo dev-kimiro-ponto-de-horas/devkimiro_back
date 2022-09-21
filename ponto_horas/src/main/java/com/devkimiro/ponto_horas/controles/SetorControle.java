@@ -35,18 +35,39 @@ public class SetorControle {
 
     @GetMapping("{id}")
     public ResponseEntity<Setor> buscarSetorPorid(@PathVariable Long id){
+        try{
         return ResponseEntity.ok(setorServico.buscarSetorPorId(id));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("nome/{nomeSetor}")
+    public ResponseEntity<Setor> buscarSetorPorNome(@PathVariable String nomeSetor){
+        try{
+        return ResponseEntity.ok(setorServico.buscarSetorPorNome(nomeSetor));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Setor> atualizarSetor(@RequestBody Setor setor, @PathVariable Long id){
+        try{
         return ResponseEntity.ok(setorServico.atualizarSetor(setor, id));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deletarSetor (@PathVariable Long id){
+        try{
         setorServico.deletarSetor(id);
         return ResponseEntity.ok().build();
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
     
 }
