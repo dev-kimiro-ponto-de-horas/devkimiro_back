@@ -25,7 +25,18 @@ public class SetorServico {
 
     public Setor buscarSetorPorId(Long id){
          Optional<Setor> setor = setorRepositorio.findById(id);
+         if(setor.isEmpty()){
+            throw new RuntimeException("O setor não pode ser encontrado pelo Id!");
+         }
          return setor.get();
+    }
+
+    public Setor buscarSetorPorNome(String nomeSetor){
+        Optional<Setor> setorEncontrado = setorRepositorio.findByNomeSetor(nomeSetor);
+        if(setorEncontrado.isEmpty()){
+            throw new RuntimeException("O setor não pode ser encontrado pelo nome!");
+        }
+        return setorEncontrado.get();
     }
 
     public Setor atualizarSetor(Setor setor, Long id){

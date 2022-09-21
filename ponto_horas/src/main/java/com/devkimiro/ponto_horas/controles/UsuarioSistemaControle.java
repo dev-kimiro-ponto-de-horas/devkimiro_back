@@ -37,27 +37,47 @@ public class UsuarioSistemaControle {
 
     @GetMapping("{id}")
     public ResponseEntity<UsuarioSistema> buscarUsuarioPorId (@PathVariable Long id){
+        try{
         return ResponseEntity.ok(usuarioSistemaServico.buscarUsuarioPorId(id));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/login/{login}")
     public ResponseEntity<UsuarioSistema> buscarUsuarioPorLogin (@PathVariable String login){
+        try{
         return ResponseEntity.ok(usuarioSistemaServico.buscarUsuarioPorLogin(login));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<UsuarioSistema> buscarUsuarioPorEmail (@PathVariable String email){
+        try{
         return ResponseEntity.ok(usuarioSistemaServico.buscarUsuarioPorEmail(email));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("{id}")
     public ResponseEntity<UsuarioSistema> atualizarUsuario (@Valid @RequestBody UsuarioSistema usuario, @PathVariable Long id){
+        try{
         return ResponseEntity.ok(usuarioSistemaServico.atualizarUsuario(usuario, id));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deletarUsuario (@PathVariable Long id){
+        try{
         usuarioSistemaServico.deletarUsuario(id);
         return ResponseEntity.ok().build();
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 }

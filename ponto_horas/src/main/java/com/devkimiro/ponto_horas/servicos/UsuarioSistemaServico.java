@@ -25,16 +25,25 @@ public class UsuarioSistemaServico {
 
     public UsuarioSistema buscarUsuarioPorId (Long id){
         Optional<UsuarioSistema> usuario = usuarioSistemaRepositorio.findById(id);
+        if(usuario.isEmpty()){
+            throw new RuntimeException("O usuário não foi encontrado pelo Id!");
+        }
         return usuario.get();
     }
 
     public UsuarioSistema buscarUsuarioPorLogin (String login){
         Optional<UsuarioSistema> usuario = usuarioSistemaRepositorio.findByLogin(login);
+        if(usuario.isEmpty()){
+            throw new RuntimeException("O usuário não foi encontrado pelo login!");
+        }
         return usuario.get();
     }
 
     public UsuarioSistema buscarUsuarioPorEmail (String email){
         Optional<UsuarioSistema> usuario = usuarioSistemaRepositorio.findByEmail(email);
+        if(usuario.isEmpty()){
+            throw new RuntimeException("O usuário não foi encontrado pelo e-mail!");
+        }
         return usuario.get();
     }
 

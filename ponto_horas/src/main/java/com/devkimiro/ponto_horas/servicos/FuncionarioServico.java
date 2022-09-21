@@ -35,16 +35,25 @@ public class FuncionarioServico {
 
     public Funcionario buscarFuncionarioPorId (Long id){
         Optional<Funcionario> usuario = funcionarioRepositorio.findById(id);
+        if(usuario.isEmpty()){
+            throw new RuntimeException("O funcionário não pode encontrado pelo Id");
+        }
         return usuario.get();
     }
 
     public Funcionario buscarFuncionarioPorCracha (String cracha){
         Optional<Funcionario> funcionarioEncontrado = funcionarioRepositorio.findByCracha(cracha);
+        if(funcionarioEncontrado.isEmpty()){
+            throw new RuntimeException("O funcionário não pode ser encontrado pelo cracha");
+        }
         return funcionarioEncontrado.get();
     }
 
     public Funcionario buscarFuncionarioPorEmail (String email) {
         Optional<Funcionario> funcionarioEncontrado = funcionarioRepositorio.findByEmail(email);
+        if(funcionarioEncontrado.isEmpty()){
+            throw new RuntimeException("O funcionário não pode ser encontrado pelo e-mail");
+        }
         return funcionarioEncontrado.get();
     }
 

@@ -37,23 +37,38 @@ public class CargoControle {
 
     @GetMapping("{id}")
     public ResponseEntity <Cargo> buscarCargoPorId (@PathVariable Long id){
+        try{
         return ResponseEntity.ok(cargoServico.buscarCargoPorId(id));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/nome/{nomeCargo}")
     public ResponseEntity <Cargo> buscarCargoPorNome (@PathVariable String nomeCargo){
+        try{
         return ResponseEntity.ok(cargoServico.buscarCargoPorNome(nomeCargo));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Cargo> atualizarCargo (@Valid @RequestBody Cargo cargo, @PathVariable Long id){
+        try{
         return ResponseEntity.ok(cargoServico.atualizarCargo(cargo, id));
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deletarCargo (@PathVariable Long id){
+        try{
         cargoServico.deletarCargo(id);
         return ResponseEntity.ok().build();
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
-    
 }
