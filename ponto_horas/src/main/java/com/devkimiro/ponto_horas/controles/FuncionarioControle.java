@@ -38,9 +38,14 @@ public class FuncionarioControle {
         return ResponseEntity.ok(funcionarioServico.buscarFuncionarioPorId(id));
     }
 
-    @GetMapping("{cpf}")
+    @GetMapping("/cracha/{cracha}")
     public ResponseEntity<Funcionario> buscarFuncionarioPorCracha (@PathVariable String cracha){
         return ResponseEntity.ok(funcionarioServico.buscarFuncionarioPorCracha(cracha));
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Funcionario> buscarFuncionarioPorEmail (@PathVariable String email){
+        return ResponseEntity.ok(funcionarioServico.buscarFuncionarioPorEmail(email));
     }
 
     @PutMapping("{id}")
