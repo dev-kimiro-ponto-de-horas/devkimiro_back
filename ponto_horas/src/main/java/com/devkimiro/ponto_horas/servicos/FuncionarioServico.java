@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devkimiro.ponto_horas.entidades.Funcionario;
+import com.devkimiro.ponto_horas.repositorios.CargoRepositorio;
 import com.devkimiro.ponto_horas.repositorios.FuncionarioRepositorio;
+import com.devkimiro.ponto_horas.repositorios.SetorRepositorio;
 
 @Service
 public class FuncionarioServico {
@@ -15,11 +17,19 @@ public class FuncionarioServico {
     @Autowired
     private FuncionarioRepositorio funcionarioRepositorio;
 
+    @Autowired
+    private SetorRepositorio setorRepositorio;
+
+    @Autowired
+    private CargoRepositorio cargoRepositorio;
+
     public List<Funcionario> listarTodosFuncionarios (){
         return funcionarioRepositorio.findAll();
     }
 
     public Funcionario criarFuncionario (Funcionario funcionario){
+        setorRepositorio.save(funcionario.getSetor());
+        cargoRepositorio.save(funcionario.getCargo());
         return funcionarioRepositorio.save(funcionario);
     }
 
@@ -33,9 +43,16 @@ public class FuncionarioServico {
         return funcionarioEncontrado.get();
     }
 
+    public Funcionario buscarFuncionarioPorEmail (String email) {
+        Optional<Funcionario> funcionarioEncontrado = funcionarioRepositorio.findByEmail(email);
+        return funcionarioEncontrado.get();
+    }
+
     public Funcionario atualizarFuncionario (Funcionario funcionario, Long id){
         Funcionario funcionarioAntigo = buscarFuncionarioPorId(id);
         funcionario.setId(funcionarioAntigo.getId());
+        setorRepositorio.save(funcionario.getSetor());
+        cargoRepositorio.save(funcionario.getCargo());
         return funcionarioRepositorio.save(funcionario);
     }
 
