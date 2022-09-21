@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +26,5 @@ public class UsuarioSistema extends BaseUser {
     @NotNull(message = "A senha do usuário não pode ficar vazia!")
     private String senha;
 
-    @Value("ADMIN")
-    private String role;    
-
+    // private String role;    
 }
