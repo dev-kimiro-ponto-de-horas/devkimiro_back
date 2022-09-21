@@ -22,14 +22,20 @@ public class CargoServico {
     public Cargo criarCargo(Cargo cargo){
         return cargoRepositorio.save(cargo);
     }
-
+    
     public Cargo buscarCargoPorId(Long id){
         Optional<Cargo> cargo = cargoRepositorio.findById(id);
+        if(cargo.isEmpty()){
+            throw new RuntimeException("O cargo não pode ser encontrado pelo Id!");
+        }
         return cargo.get();
     }
 
     public Cargo buscarCargoPorNome (String nomeCargo){
         Optional<Cargo> cargoEncontrado = cargoRepositorio.findByNomeCargo(nomeCargo);
+        if(cargoEncontrado.isEmpty()){
+            throw new RuntimeException("O cargo não pode ser encontrado pelo nome!");
+        }
         return cargoEncontrado.get();
     }
 
