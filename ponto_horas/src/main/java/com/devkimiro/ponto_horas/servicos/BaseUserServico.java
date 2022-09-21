@@ -16,11 +16,17 @@ public class BaseUserServico {
 
     public BaseUser buscarUserPorNome(String nome){
         Optional<BaseUser> user = baseUserRepositorio.findByNome(nome);
+        if(user.isEmpty()){
+            throw new RuntimeException("O usuário não pode ser encontrado pelo nome!");
+        }
         return user.get();
     }
 
     public BaseUser buscarUserPorEmail(String email){
         Optional<BaseUser> user = baseUserRepositorio.findByEmail(email);
+        if(user.isEmpty()){
+            throw new RuntimeException("O usuário não pode ser encontrado pelo e-mail!");
+        }
         return user.get();
     }
 }
