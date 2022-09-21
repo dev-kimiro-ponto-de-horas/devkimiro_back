@@ -36,8 +36,13 @@ public class CargoControle {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Cargo> buscarCargoPorId(@PathVariable Long id){
+    public ResponseEntity <Cargo> buscarCargoPorId (@PathVariable Long id){
         return ResponseEntity.ok(cargoServico.buscarCargoPorId(id));
+    }
+
+    @GetMapping("/nome/{nomeCargo}")
+    public ResponseEntity <Cargo> buscarCargoPorNome (@PathVariable String nomeCargo){
+        return ResponseEntity.ok(cargoServico.buscarCargoPorNome(nomeCargo));
     }
 
     @PutMapping("{id}")
