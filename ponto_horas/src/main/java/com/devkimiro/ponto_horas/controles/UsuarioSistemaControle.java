@@ -37,7 +37,17 @@ public class UsuarioSistemaControle {
 
     @GetMapping("{id}")
     public ResponseEntity<UsuarioSistema> buscarUsuarioPorId (@PathVariable Long id){
-        return ResponseEntity.ok(usuarioSistemaServico.buscarUsuario(id));
+        return ResponseEntity.ok(usuarioSistemaServico.buscarUsuarioPorId(id));
+    }
+
+    @GetMapping("/login/{login}")
+    public ResponseEntity<UsuarioSistema> buscarUsuarioPorLogin (@PathVariable String login){
+        return ResponseEntity.ok(usuarioSistemaServico.buscarUsuarioPorLogin(login));
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UsuarioSistema> buscarUsuarioPorEmail (@PathVariable String email){
+        return ResponseEntity.ok(usuarioSistemaServico.buscarUsuarioPorEmail(email));
     }
 
     @PutMapping("{id}")
