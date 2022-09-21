@@ -1,6 +1,6 @@
 package com.devkimiro.ponto_horas.entidades;
 
-import java.time.LocalDateTime;
+import java.sql.Time;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,11 +39,11 @@ public class Funcionario extends BaseUser {
     private String senha;
 
     @Column(name = "hora_entrada")
-    @JsonFormat(pattern = "yyyy-MM-DD HH-mm-ss", shape = Shape.STRING)
-    private LocalDateTime horaEntrada;
+    @JsonFormat(pattern = "HH-mm-ss", shape = Shape.STRING)
+    private Time horaEntrada;
 
     @Column(name = "hora_saida")
-    @JsonFormat(pattern = "yyyy-MM-DD HH-mm-ss", shape = Shape.STRING)
-    private LocalDateTime horaSaida;
+    @JsonFormat(pattern = "HH-mm-ss", shape = Shape.STRING)
+    private Time horaSaida;
     
 }
