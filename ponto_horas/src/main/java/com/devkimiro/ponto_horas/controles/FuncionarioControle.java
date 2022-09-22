@@ -1,9 +1,11 @@
 package com.devkimiro.ponto_horas.controles;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +15,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestDto;
+import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestUpdateDto;
+import com.devkimiro.ponto_horas.dto.response.FuncionarioResponseDto;
 import com.devkimiro.ponto_horas.entidades.Funcionario;
+import com.devkimiro.ponto_horas.mapeamento.MapeamentoFuncionario;
 import com.devkimiro.ponto_horas.servicos.FuncionarioServico;
 
 @RestController
@@ -23,46 +30,68 @@ public class FuncionarioControle {
     @Autowired
     private FuncionarioServico funcionarioServico;
 
+    @Autowired
+    private ModelMapper mapper;
+
     @GetMapping
-    public ResponseEntity<List<Funcionario>> listarTodosFuncionarios (){
-        return ResponseEntity.ok(funcionarioServico.listarTodosFuncionarios());
+    public ResponseEntity<List<FuncionarioResponseDto>> listarTodosFuncionarios (){
+        List<Funcionario> funcionarioLista = funcionarioServico.listarTodosFuncionarios();
+        List<FuncionarioResponseDto> lista = new ArrayList<>();
+        for(Funcionario funcionario : funcionarioLista ){
+            FuncionarioResponseDto map = mapper.map(funcionario, FuncionarioResponseDto.class);
+            lista.add(map);
+        }
+        return ResponseEntity.ok(lista);
     }
 
     @PostMapping
-    public ResponseEntity<Funcionario> criarFuncionario (@Valid @RequestBody Funcionario funcionario){
-        return ResponseEntity.ok(funcionarioServico.criarFuncionario(funcionario));
+    public ResponseEntity<FuncionarioResponseDto> criarFuncionario (@Valid @RequestBody FuncionarioRequestDto funcionarioDto){
+        try{
+        Funcionario funcionarioCriado = funcionarioServico.criarFuncionario(funcionarioDto);
+        return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponse(funcionarioCriado));
+        }catch(RuntimeException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Funcionario> buscarFuncionarioPorId (@PathVariable Long id){
+    public ResponseEntity<FuncionarioResponseDto> buscarFuncionarioPorId (@PathVariable Long id){
         try{
-        return ResponseEntity.ok(funcionarioServico.buscarFuncionarioPorId(id));
+        Funcionario funcionarioEncontrado = funcionarioServico.buscarFuncionarioPorId(id);
+        return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponse(funcionarioEncontrado));
         }catch(RuntimeException e){
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/cracha/{cracha}")
-    public ResponseEntity<Funcionario> buscarFuncionarioPorCracha (@PathVariable String cracha){
+    public ResponseEntity<FuncionarioResponseDto> buscarFuncionarioPorCracha (@PathVariable String cracha){
         try{
-        return ResponseEntity.ok(funcionarioServico.buscarFuncionarioPorCracha(cracha));
-        }catch(RuntimeException e){
-            return ResponseEntity.notFound().build();
-        }
+            Funcionario funcionarioEncontrado = funcionarioServico.buscarFuncionarioPorCracha(cracha);
+            return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponse(funcionarioEncontrado));
+            }catch(RuntimeException e){
+                return ResponseEntity.notFound().build();
+            }
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<Funcionario> buscarFuncionarioPorEmail (@PathVariable String email){
+    public ResponseEntity<FuncionarioResponseDto> buscarFuncionarioPorEmail (@PathVariable String email){
         try{
-        return ResponseEntity.ok(funcionarioServico.buscarFuncionarioPorEmail(email));
+            Funcionario funcionarioEncontrado = funcionarioServico.buscarFuncionarioPorEmail(email);
+            return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponse(funcionarioEncontrado));
+            }catch(RuntimeException e){
+                return ResponseEntity.notFound().build();
+            }
+    }
+
+    @PutMapping("{cracha}")
+    public ResponseEntity<FuncionarioResponseDto> atualizarFuncionario (@Valid @RequestBody FuncionarioRequestUpdateDto funcionario, @PathVariable String cracha){
+        try{
+        Funcionario funcionarioAtualizado = funcionarioServico.atualizarFuncionario(funcionario, cracha);
+        return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponse(funcionarioAtualizado));
         }catch(RuntimeException e){
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<Funcionario> atualizarFuncionario (@Valid @RequestBody Funcionario funcionario, @PathVariable Long id){
-        return ResponseEntity.ok(funcionarioServico.atualizarFuncionario(funcionario, id));
     }
 
     public ResponseEntity<?> deletarFuncionario (@PathVariable Long id){

@@ -17,6 +17,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UsuarioSistema extends BaseUser {
 
+     //id
+    //nome
+    //email
+
     @Column(unique = true)
     @NotBlank(message = "O login do usuário não pode ser enviado em branco!")
     @NotNull(message = "O login do usuário não pode ficar vazio!")

@@ -23,6 +23,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Funcionario extends BaseUser {
 
+    //id
+    //nome
+    //email
+    
     @ManyToOne
     private Cargo cargo;
 
@@ -45,5 +49,17 @@ public class Funcionario extends BaseUser {
     @Column(name = "hora_saida")
     @JsonFormat(pattern = "HH-mm-ss", shape = Shape.STRING)
     private Time horaSaida;
+
+    public Funcionario(Long id, @NotNull(message = "O nome não pode ser nulo!") String nome,
+            @NotNull(message = "O e-mail não pode estar vazio!") String email, Cargo cargo, Setor setor,
+            @NotBlank(message = "O crachá do funcionário não ser enviado em branco!") @NotNull(message = "O crachá do funcionário não pode ser vazio!") String cracha,
+            @NotBlank(message = "A senha do funcionário não pode ser enviado em branco!") @NotNull(message = "A senha do funcionário não pode ser vazia!") String senha) {
+        super(id, nome, email);
+        this.cargo = cargo;
+        this.setor = setor;
+        this.cracha = cracha;
+        this.senha = senha;
+    }
+
     
 }

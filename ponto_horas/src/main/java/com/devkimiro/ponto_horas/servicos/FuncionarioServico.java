@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestDto;
+import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestUpdateDto;
+import com.devkimiro.ponto_horas.entidades.Cargo;
 import com.devkimiro.ponto_horas.entidades.Funcionario;
-import com.devkimiro.ponto_horas.repositorios.CargoRepositorio;
+import com.devkimiro.ponto_horas.entidades.Setor;
 import com.devkimiro.ponto_horas.repositorios.FuncionarioRepositorio;
-import com.devkimiro.ponto_horas.repositorios.SetorRepositorio;
 
 @Service
 public class FuncionarioServico {
@@ -18,25 +20,26 @@ public class FuncionarioServico {
     private FuncionarioRepositorio funcionarioRepositorio;
 
     @Autowired
-    private SetorRepositorio setorRepositorio;
+    private SetorServico setorServico;
 
     @Autowired
-    private CargoRepositorio cargoRepositorio;
+    private CargoServico cargoServico;
 
     public List<Funcionario> listarTodosFuncionarios (){
         return funcionarioRepositorio.findAll();
     }
 
-    public Funcionario criarFuncionario (Funcionario funcionario){
-        setorRepositorio.save(funcionario.getSetor());
-        cargoRepositorio.save(funcionario.getCargo());
+    public Funcionario criarFuncionario (FuncionarioRequestDto funcionarioDto){
+        Setor setor = setorServico.buscarSetorPorNome(funcionarioDto.getNomeSetor());
+        Cargo cargo = cargoServico.buscarCargoPorNome(funcionarioDto.getNomeCargo());
+        Funcionario funcionario = new Funcionario(null, funcionarioDto.getNome(), funcionarioDto.getEmail(), cargo, setor, funcionarioDto.getCracha(), funcionarioDto.getSenha());
         return funcionarioRepositorio.save(funcionario);
     }
 
     public Funcionario buscarFuncionarioPorId (Long id){
         Optional<Funcionario> usuario = funcionarioRepositorio.findById(id);
         if(usuario.isEmpty()){
-            throw new RuntimeException("O funcionário não pode encontrado pelo Id");
+            throw new RuntimeException("O funcionário não pode encontrado! :(");
         }
         return usuario.get();
     }
@@ -44,7 +47,7 @@ public class FuncionarioServico {
     public Funcionario buscarFuncionarioPorCracha (String cracha){
         Optional<Funcionario> funcionarioEncontrado = funcionarioRepositorio.findByCracha(cracha);
         if(funcionarioEncontrado.isEmpty()){
-            throw new RuntimeException("O funcionário não pode ser encontrado pelo cracha");
+            throw new RuntimeException("O funcionário não pode ser encontrado! :(");
         }
         return funcionarioEncontrado.get();
     }
@@ -52,16 +55,14 @@ public class FuncionarioServico {
     public Funcionario buscarFuncionarioPorEmail (String email) {
         Optional<Funcionario> funcionarioEncontrado = funcionarioRepositorio.findByEmail(email);
         if(funcionarioEncontrado.isEmpty()){
-            throw new RuntimeException("O funcionário não pode ser encontrado pelo e-mail");
+            throw new RuntimeException("O funcionário não pode ser encontrado! :(");
         }
         return funcionarioEncontrado.get();
     }
 
-    public Funcionario atualizarFuncionario (Funcionario funcionario, Long id){
-        Funcionario funcionarioAntigo = buscarFuncionarioPorId(id);
-        funcionario.setId(funcionarioAntigo.getId());
-        setorRepositorio.save(funcionario.getSetor());
-        cargoRepositorio.save(funcionario.getCargo());
+    public Funcionario atualizarFuncionario (FuncionarioRequestUpdateDto funcionarioDto, String cracha){
+        Funcionario funcionario = buscarFuncionarioPorCracha(cracha);
+        funcionario.setSenha(funcionarioDto.getSenha());
         return funcionarioRepositorio.save(funcionario);
     }
 
