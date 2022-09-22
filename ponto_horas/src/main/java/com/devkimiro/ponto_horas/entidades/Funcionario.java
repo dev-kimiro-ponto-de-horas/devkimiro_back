@@ -23,6 +23,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Funcionario extends BaseUser {
 
+    //id
+    //nome
+    //email
+    
     @ManyToOne
     private Cargo cargo;
 
