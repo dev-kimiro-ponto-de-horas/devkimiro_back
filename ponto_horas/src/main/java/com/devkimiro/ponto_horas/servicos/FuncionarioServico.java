@@ -66,6 +66,19 @@ public class FuncionarioServico {
         return funcionarioRepositorio.save(funcionario);
     }
 
+    public Funcionario atualizarFuncionarioAdmin (FuncionarioRequestDto funcionarioDto, String cracha){
+        Funcionario funcionario = buscarFuncionarioPorCracha(cracha);
+        Setor setor = setorServico.buscarSetorPorNome(funcionarioDto.getNomeSetor());
+        Cargo cargo = cargoServico.buscarCargoPorNome(funcionarioDto.getNomeCargo());
+        funcionario.setNome(funcionarioDto.getNome());
+        funcionario.setEmail(funcionarioDto.getEmail());
+        funcionario.setCargo(cargo);
+        funcionario.setSetor(setor);
+        funcionario.setSenha(funcionarioDto.getSenha());
+        return funcionarioRepositorio.save(funcionario);
+        
+    }
+
     public void deletarFuncionario (Long id){
         funcionarioRepositorio.deleteById(id);
     }
