@@ -20,6 +20,10 @@ public class SetorServico {
     }
 
     public Setor criarSetor(Setor setor){
+        Optional<Setor> setorEncontrado = setorRepositorio.findByNomeSetor(setor.getNomeSetor());
+        if(setorEncontrado.isPresent()){
+            throw new RuntimeException("O setor já existe!");
+        }
         return setorRepositorio.save(setor);
     }
 
