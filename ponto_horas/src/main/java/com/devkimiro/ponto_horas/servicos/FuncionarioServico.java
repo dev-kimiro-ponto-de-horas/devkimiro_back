@@ -30,6 +30,10 @@ public class FuncionarioServico {
     }
 
     public Funcionario criarFuncionario (FuncionarioRequestDto funcionarioDto){
+        Optional<Funcionario> funcionarioCracha = funcionarioRepositorio.findByCracha(funcionarioDto.getCracha());
+        if(funcionarioCracha.isPresent()){
+            throw new RuntimeException("Já existe um cracha cadastrado como: " + funcionarioDto.getCracha());
+        }
         Setor setor = setorServico.buscarSetorPorNome(funcionarioDto.getNomeSetor());
         Cargo cargo = cargoServico.buscarCargoPorNome(funcionarioDto.getNomeCargo());
         Funcionario funcionario = new Funcionario(null, funcionarioDto.getNome(), funcionarioDto.getEmail(), cargo, setor, funcionarioDto.getCracha(), funcionarioDto.getSenha());
