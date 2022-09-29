@@ -29,7 +29,6 @@ public class Cargo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // @Column(name = "nome_cargo")
     @NotBlank(message = "O nome do cargo não pode ser enviado em branco!")
     @NotNull(message = "O nome do cargo não pode ser vazio!")
     private String nomeCargo;

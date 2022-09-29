@@ -30,6 +30,10 @@ public class FuncionarioServico {
     }
 
     public Funcionario criarFuncionario (FuncionarioRequestDto funcionarioDto){
+        Optional<Funcionario> funcionarioCracha = funcionarioRepositorio.findByCracha(funcionarioDto.getCracha());
+        if(funcionarioCracha.isPresent()){
+            throw new RuntimeException("Já existe um cracha cadastrado como: " + funcionarioDto.getCracha());
+        }
         Setor setor = setorServico.buscarSetorPorNome(funcionarioDto.getNomeSetor());
         Cargo cargo = cargoServico.buscarCargoPorNome(funcionarioDto.getNomeCargo());
         Funcionario funcionario = new Funcionario(null, funcionarioDto.getNome(), funcionarioDto.getEmail(), cargo, setor, funcionarioDto.getCracha(), funcionarioDto.getSenha());
@@ -64,6 +68,19 @@ public class FuncionarioServico {
         Funcionario funcionario = buscarFuncionarioPorCracha(cracha);
         funcionario.setSenha(funcionarioDto.getSenha());
         return funcionarioRepositorio.save(funcionario);
+    }
+
+    public Funcionario atualizarFuncionarioAdmin (FuncionarioRequestDto funcionarioDto, String cracha){
+        Funcionario funcionario = buscarFuncionarioPorCracha(cracha);
+        Setor setor = setorServico.buscarSetorPorNome(funcionarioDto.getNomeSetor());
+        Cargo cargo = cargoServico.buscarCargoPorNome(funcionarioDto.getNomeCargo());
+        funcionario.setNome(funcionarioDto.getNome());
+        funcionario.setEmail(funcionarioDto.getEmail());
+        funcionario.setCargo(cargo);
+        funcionario.setSetor(setor);
+        funcionario.setSenha(funcionarioDto.getSenha());
+        return funcionarioRepositorio.save(funcionario);
+        
     }
 
     public void deletarFuncionario (Long id){

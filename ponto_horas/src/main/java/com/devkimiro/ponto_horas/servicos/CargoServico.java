@@ -20,6 +20,10 @@ public class CargoServico {
     }
 
     public Cargo criarCargo(Cargo cargo){
+        Optional<Cargo> cargoEncontrado = cargoRepositorio.findByNomeCargo(cargo.getNomeCargo());
+        if(cargoEncontrado.isPresent()){
+            throw new RuntimeException("O nome do cargo já");
+        }
         return cargoRepositorio.save(cargo);
     }
     
