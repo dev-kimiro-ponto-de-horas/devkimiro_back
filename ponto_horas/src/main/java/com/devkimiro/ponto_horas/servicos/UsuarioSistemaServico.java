@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.devkimiro.ponto_horas.entidades.UsuarioSistema;
 import com.devkimiro.ponto_horas.repositorios.UsuarioSistemaRepositorio;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class UsuarioSistemaServico {
@@ -64,6 +68,22 @@ public class UsuarioSistemaServico {
 
     public void deletarUsuario (Long id){
         usuarioSistemaRepositorio.deleteById(id);
+    }
+
+    public ResponseEntity<Boolean> validarSenha(@RequestParam String login, @RequestParam String senha) {
+
+        Optional<UsuarioSistema> optUsuario = usuarioSistemaRepositorio.findByLogin(login);
+
+        if (optUsuario.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+
+        UsuarioSistema usuario = optUsuario.get();
+        boolean valid = encoder.matches(senha,usuario.getSenha());
+
+        HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+        return ResponseEntity.status(status).body(valid);
+
     }
     
 }
