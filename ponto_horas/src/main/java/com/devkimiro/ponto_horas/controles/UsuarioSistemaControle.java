@@ -1,22 +1,19 @@
 package com.devkimiro.ponto_horas.controles;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.devkimiro.ponto_horas.repositorios.UsuarioSistemaRepositorio;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import com.devkimiro.ponto_horas.entidades.UsuarioSistema;
 import com.devkimiro.ponto_horas.servicos.UsuarioSistemaServico;
@@ -27,6 +24,16 @@ public class UsuarioSistemaControle {
 
     @Autowired
     private UsuarioSistemaServico usuarioSistemaServico;
+
+    @Autowired
+    private UsuarioSistemaRepositorio usuarioSistemaRepositorio;
+
+    private final PasswordEncoder encoder;
+
+    public UsuarioSistemaControle(UsuarioSistemaRepositorio usuarioSistemaRepositorio, PasswordEncoder encoder) {
+        this.usuarioSistemaRepositorio = usuarioSistemaRepositorio;
+        this.encoder = encoder;
+    }
 
     @GetMapping
     @ApiOperation("Listar todos os Usuários")
@@ -112,4 +119,22 @@ public class UsuarioSistemaControle {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/validarSenha")
+    public ResponseEntity<Boolean> validarSenha(@RequestParam String login, @RequestParam String senha) {
+
+        Optional<UsuarioSistema> optUsuario = usuarioSistemaRepositorio.findByLogin(login);
+
+        if (optUsuario.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+
+        UsuarioSistema usuario = optUsuario.get();
+        boolean valid = encoder.matches(senha,usuario.getSenha());
+
+        HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+        return ResponseEntity.status(status).body(valid);
+
+    }
+
 }
