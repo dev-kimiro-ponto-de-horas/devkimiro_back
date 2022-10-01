@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.devkimiro.ponto_horas.entidades.UsuarioSistema;
@@ -15,11 +16,19 @@ public class UsuarioSistemaServico {
     @Autowired
     private UsuarioSistemaRepositorio usuarioSistemaRepositorio;
 
+    private final PasswordEncoder encoder;
+
+    public UsuarioSistemaServico(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
+
+
     public List<UsuarioSistema> listarTodosUsuarios (){
         return usuarioSistemaRepositorio.findAll();
     }
 
     public UsuarioSistema criarUsuario (UsuarioSistema usuario){
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
         return usuarioSistemaRepositorio.save(usuario);
     }
 
