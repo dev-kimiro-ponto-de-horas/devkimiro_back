@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -29,6 +30,7 @@ import com.devkimiro.ponto_horas.servicos.FuncionarioServico;
 
 @RestController
 @RequestMapping("/funcionario")
+@Api("Controle de Funcionário")
 public class FuncionarioControle {
     
     @Autowired
