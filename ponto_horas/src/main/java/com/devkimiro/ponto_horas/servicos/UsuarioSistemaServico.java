@@ -70,20 +70,5 @@ public class UsuarioSistemaServico {
         usuarioSistemaRepositorio.deleteById(id);
     }
 
-    public ResponseEntity<Boolean> validarSenha(@RequestParam String login, @RequestParam String senha) {
 
-        Optional<UsuarioSistema> optUsuario = usuarioSistemaRepositorio.findByLogin(login);
-
-        if (optUsuario.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
-        }
-
-        UsuarioSistema usuario = optUsuario.get();
-        boolean valid = encoder.matches(senha,usuario.getSenha());
-
-        HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-        return ResponseEntity.status(status).body(valid);
-
-    }
-    
 }
