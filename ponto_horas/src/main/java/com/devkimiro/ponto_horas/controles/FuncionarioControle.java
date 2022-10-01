@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +38,8 @@ public class FuncionarioControle {
     private ModelMapper mapper;
 
     @GetMapping
+    @ApiOperation("Listar todos os Funcionários")
+    @ApiResponse(code = 200, message = "Todos os funcionários listados com sucesso!")
     public ResponseEntity<List<FuncionarioResponseDto>> listarTodosFuncionarios (){
         List<Funcionario> funcionarioLista = funcionarioServico.listarTodosFuncionarios();
         List<FuncionarioResponseDto> lista = new ArrayList<>();
@@ -46,6 +51,11 @@ public class FuncionarioControle {
     }
 
     @PostMapping
+    @ApiOperation("Criar um Funcionário")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionário criado com sucesso!") ,
+            @ApiResponse(code = 204, message = "Funcionário sem conteúdo!")
+    })
     public ResponseEntity<FuncionarioResponseDto> criarFuncionario (@Valid @RequestBody FuncionarioRequestDto funcionarioDto){
         try{
         Funcionario funcionarioCriado = funcionarioServico.criarFuncionario(funcionarioDto);
@@ -56,6 +66,11 @@ public class FuncionarioControle {
     }
 
     @GetMapping("{id}")
+    @ApiOperation("Buscar um Funcionário por ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionário encontrado com sucesso!") ,
+            @ApiResponse(code = 404, message = "Funcionário não encontrado!")
+    })
     public ResponseEntity<FuncionarioResponseDto> buscarFuncionarioPorId (@PathVariable Long id){
         try{
         Funcionario funcionarioEncontrado = funcionarioServico.buscarFuncionarioPorId(id);
@@ -66,6 +81,11 @@ public class FuncionarioControle {
     }
 
     @GetMapping("/cracha/{cracha}")
+    @ApiOperation("Buscar um Funcionário por Crachá")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Crachá do Funcionário encontrado com sucesso!") ,
+            @ApiResponse(code = 404, message = "Crachá não encontrado!")
+    })
     public ResponseEntity<FuncionarioResponseDto> buscarFuncionarioPorCracha (@PathVariable String cracha){
         try{
             Funcionario funcionarioEncontrado = funcionarioServico.buscarFuncionarioPorCracha(cracha);
@@ -76,6 +96,11 @@ public class FuncionarioControle {
     }
 
     @GetMapping("/email/{email}")
+    @ApiOperation("Buscar um Funcionário por E-mail")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "E-mail do Funcionário encontrado com sucesso!") ,
+            @ApiResponse(code = 404, message = "E-mail não encontrado!")
+    })
     public ResponseEntity<FuncionarioResponseDto> buscarFuncionarioPorEmail (@PathVariable String email){
         try{
             Funcionario funcionarioEncontrado = funcionarioServico.buscarFuncionarioPorEmail(email);
@@ -86,6 +111,11 @@ public class FuncionarioControle {
     }
 
     @PutMapping("{cracha}")
+    @ApiOperation("Atualizar um Funcionário")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionário atualizado com sucesso!") ,
+            @ApiResponse(code = 404, message = "Funcionário não encontrado!")
+    })
     public ResponseEntity<FuncionarioResponseDto> atualizarFuncionario (@Valid @RequestBody FuncionarioRequestUpdateDto funcionario, @PathVariable String cracha){
         try{
         Funcionario funcionarioAtualizado = funcionarioServico.atualizarFuncionario(funcionario, cracha);
@@ -96,6 +126,11 @@ public class FuncionarioControle {
     }
 
     @PutMapping("/admin/{cracha}")
+    @ApiOperation("Atualizar um Funcionário Administrador")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Administrador atualizado com sucesso!") ,
+            @ApiResponse(code = 404, message = "Administrador não encontrado!")
+    })
     public ResponseEntity<FuncionarioResponseDto> atualizarFuncionarioAdmin (@Valid FuncionarioRequestDto funcionario,@PathVariable String cracha){
         try{
             Funcionario funcionarioAtualizado = funcionarioServico.atualizarFuncionarioAdmin(funcionario, cracha);
@@ -106,6 +141,11 @@ public class FuncionarioControle {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar um Funcionário")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionário deletado com sucesso!") ,
+            @ApiResponse(code = 404, message = "Funcionário não encontrado!")
+    })
     public ResponseEntity<?> deletarFuncionario (@PathVariable Long id){
         try{
         funcionarioServico.deletarFuncionario(id);
