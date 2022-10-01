@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestDto;
@@ -25,6 +26,13 @@ public class FuncionarioServico {
     @Autowired
     private CargoServico cargoServico;
 
+    private final PasswordEncoder encoder;
+
+    public FuncionarioServico(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
+
+
     public List<Funcionario> listarTodosFuncionarios (){
         return funcionarioRepositorio.findAll();
     }
@@ -37,6 +45,7 @@ public class FuncionarioServico {
         Setor setor = setorServico.buscarSetorPorNome(funcionarioDto.getNomeSetor());
         Cargo cargo = cargoServico.buscarCargoPorNome(funcionarioDto.getNomeCargo());
         Funcionario funcionario = new Funcionario(null, funcionarioDto.getNome(), funcionarioDto.getEmail(), cargo, setor, funcionarioDto.getCracha(), funcionarioDto.getSenha());
+        funcionario.setSenha(encoder.encode(funcionario.getSenha()));
         return funcionarioRepositorio.save(funcionario);
     }
 
