@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devkimiro.ponto_horas.dto.request.UsuarioSistemaRequestDto;
+import com.devkimiro.ponto_horas.dto.request.UsuarioSistemaUpdateDto;
 import com.devkimiro.ponto_horas.entidades.UsuarioSistema;
 import com.devkimiro.ponto_horas.repositorios.UsuarioSistemaRepositorio;
 
@@ -19,7 +21,12 @@ public class UsuarioSistemaServico {
         return usuarioSistemaRepositorio.findAll();
     }
 
-    public UsuarioSistema criarUsuario (UsuarioSistema usuario){
+    public UsuarioSistema criarUsuario (UsuarioSistemaRequestDto usuarioDto){
+        Optional<UsuarioSistema> usuarioCracha = usuarioSistemaRepositorio.findByLogin(usuarioDto.getLogin());
+        if(usuarioCracha.isPresent()){
+            throw new RuntimeException("Já existe um usuário com o Login: " + usuarioDto.getLogin());
+        }
+        UsuarioSistema usuario = new UsuarioSistema(null, usuarioDto.getNome(), usuarioDto.getEmail(), usuarioDto.getLogin(), usuarioDto.getSenha());
         return usuarioSistemaRepositorio.save(usuario);
     }
 
@@ -47,10 +54,10 @@ public class UsuarioSistemaServico {
         return usuario.get();
     }
 
-    public UsuarioSistema  atualizarUsuario (UsuarioSistema usuario, Long id){
-        UsuarioSistema usuarioAntigo = buscarUsuarioPorId(id);
-        usuario.setId(usuarioAntigo.getId());
-        return criarUsuario(usuario);
+    public UsuarioSistema  atualizarUsuario (UsuarioSistemaUpdateDto usuarioDto, String login){
+        UsuarioSistema usuario = buscarUsuarioPorLogin(login);
+        usuario.setSenha(usuarioDto.getSenha());
+        return usuarioSistemaRepositorio.save(usuario);
     }
 
     public void deletarUsuario (Long id){
