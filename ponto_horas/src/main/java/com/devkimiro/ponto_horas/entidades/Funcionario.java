@@ -1,15 +1,10 @@
 package com.devkimiro.ponto_horas.entidades;
 
-import java.sql.Time;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,14 +37,6 @@ public class Funcionario extends BaseUser {
     @NotNull(message = "A senha do funcionário não pode ser vazia!")
     private String senha;
 
-    @Column(name = "hora_entrada")
-    @JsonFormat(pattern = "HH-mm-ss", shape = Shape.STRING)
-    private Time horaEntrada;
-
-    @Column(name = "hora_saida")
-    @JsonFormat(pattern = "HH-mm-ss", shape = Shape.STRING)
-    private Time horaSaida;
-
     public Funcionario(Long id, @NotNull(message = "O nome não pode ser nulo!") String nome,
             @NotNull(message = "O e-mail não pode estar vazio!") String email, Cargo cargo, Setor setor,
             @NotBlank(message = "O crachá do funcionário não ser enviado em branco!") @NotNull(message = "O crachá do funcionário não pode ser vazio!") String cracha,
@@ -59,7 +46,5 @@ public class Funcionario extends BaseUser {
         this.setor = setor;
         this.cracha = cracha;
         this.senha = senha;
-    }
-
-    
+    } 
 }
