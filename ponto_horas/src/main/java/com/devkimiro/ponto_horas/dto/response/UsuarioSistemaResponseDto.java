@@ -14,6 +14,5 @@ public class UsuarioSistemaResponseDto {
     private String nome;
     private String email;
     private String login;
-    private String senha;
 
 }
