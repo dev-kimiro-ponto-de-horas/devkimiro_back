@@ -86,7 +86,7 @@ public class UsuarioSistemaControle {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("{login}")
     public ResponseEntity<UsuarioSistemaResponseDto> atualizarUsuario(
             @Valid @RequestBody UsuarioSistemaUpdateDto usuarioDto, @PathVariable String login) {
         try {
