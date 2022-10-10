@@ -6,7 +6,7 @@ import com.devkimiro.ponto_horas.entidades.UsuarioSistema;
 public class MapeamentoUsuarioSistema {
     
     public static UsuarioSistemaResponseDto deUsuarioParaResponse (UsuarioSistema usuario){
-        return new UsuarioSistemaResponseDto(usuario.getNome(), usuario.getEmail(), usuario.getLogin(), usuario.getSenha());
+        return new UsuarioSistemaResponseDto(usuario.getNome(), usuario.getEmail(), usuario.getLogin());
     }
 
 }
