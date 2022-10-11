@@ -1,5 +1,7 @@
 package com.devkimiro.ponto_horas.servicos;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestDto;
 import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestUpdateDto;
+import com.devkimiro.ponto_horas.entidades.Calendario;
 import com.devkimiro.ponto_horas.entidades.Cargo;
 import com.devkimiro.ponto_horas.entidades.Funcionario;
 import com.devkimiro.ponto_horas.entidades.Setor;
@@ -24,6 +27,9 @@ public class FuncionarioServico {
 
     @Autowired
     private CargoServico cargoServico;
+
+    @Autowired
+    private CalendarioServico calendarioServico;
 
     public List<Funcionario> listarTodosFuncionarios (){
         return funcionarioRepositorio.findAll();
@@ -85,5 +91,23 @@ public class FuncionarioServico {
 
     public void deletarFuncionario (Long id){
         funcionarioRepositorio.deleteById(id);
+    }
+
+    public Funcionario baterPontoInicio(String cracha){
+        Funcionario funcionario = buscarFuncionarioPorCracha(cracha);
+        Calendario calendario = new Calendario(null, LocalDateTime.now(), null);
+        calendarioServico.criarCalendario(calendario);
+        List<Calendario> lista = new ArrayList<>();
+        lista.add(calendario);
+        funcionario.setCalendario(lista);
+        return funcionarioRepositorio.save(funcionario);
+    }
+
+    public Funcionario baterPontoFinal(String cracha){
+        Funcionario funcionario = buscarFuncionarioPorCracha(cracha);
+        Calendario calendario = calendarioServico.buscarCalendario(funcionario.getCalendario().get(funcionario.getCalendario().size()-1).getId());
+        calendario.setHoraSaida(LocalDateTime.now());
+        calendario = calendarioServico.criarCalendario(calendario);
+        return funcionarioRepositorio.save(funcionario);
     }
 }
