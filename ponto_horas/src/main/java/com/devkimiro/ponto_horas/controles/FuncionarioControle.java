@@ -114,4 +114,14 @@ public class FuncionarioControle {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/ponto/inicio/{cracha}")
+    public ResponseEntity<Funcionario> baterPontoInicio (@PathVariable String cracha){
+        return ResponseEntity.ok(funcionarioServico.baterPontoInicio(cracha));
+    }
+
+    @PostMapping("/ponto/saida/{cracha}")
+    public ResponseEntity<Funcionario> baterPontoSaida (@PathVariable String cracha){
+        return ResponseEntity.ok(funcionarioServico.baterPontoFinal(cracha));
+    }
 }
