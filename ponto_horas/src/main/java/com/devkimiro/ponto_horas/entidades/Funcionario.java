@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -28,7 +28,7 @@ public class Funcionario extends BaseUser {
     private Setor setor;
 
     @Column(unique = true)
-    @NotBlank(message = "O crachá do funcionário não ser enviado em branco!")
+    @NotBlank(message = "O crachá do funcionário não pode ser enviado em branco!")
     @NotNull(message = "O crachá do funcionário não pode ser vazio!")
     private String cracha;
 
@@ -36,7 +36,7 @@ public class Funcionario extends BaseUser {
     @NotNull(message = "A senha do funcionário não pode ser vazia!")
     private String senha;
 
-    @ManyToMany
+    @OneToMany
     private List<Calendario> calendario;
 
     public Funcionario(Long id, @NotNull(message = "O nome não pode ser nulo!") String nome,

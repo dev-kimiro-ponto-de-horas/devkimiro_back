@@ -1,7 +1,6 @@
 package com.devkimiro.ponto_horas.servicos;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,8 +84,7 @@ public class FuncionarioServico {
         funcionario.setCargo(cargo);
         funcionario.setSetor(setor);
         funcionario.setSenha(funcionarioDto.getSenha());
-        return funcionarioRepositorio.save(funcionario);
-        
+        return funcionarioRepositorio.save(funcionario);   
     }
 
     public void deletarFuncionario (Long id){
@@ -95,19 +93,17 @@ public class FuncionarioServico {
 
     public Funcionario baterPontoInicio(String cracha){
         Funcionario funcionario = buscarFuncionarioPorCracha(cracha);
-        Calendario calendario = new Calendario(null, LocalDateTime.now(), null);
+        Calendario calendario = new Calendario(null, LocalDateTime.now(), null, funcionario.getCracha());
         calendarioServico.criarCalendario(calendario);
-        List<Calendario> lista = new ArrayList<>();
-        lista.add(calendario);
-        funcionario.setCalendario(lista);
+        funcionario.getCalendario().add(calendario);
         return funcionarioRepositorio.save(funcionario);
     }
 
     public Funcionario baterPontoFinal(String cracha){
         Funcionario funcionario = buscarFuncionarioPorCracha(cracha);
-        Calendario calendario = calendarioServico.buscarCalendario(funcionario.getCalendario().get(funcionario.getCalendario().size()-1).getId());
+        Calendario calendario = calendarioServico.buscarCalendarioPorCracha(cracha);
         calendario.setHoraSaida(LocalDateTime.now());
-        calendario = calendarioServico.criarCalendario(calendario);
+        calendarioServico.criarCalendario(calendario);
         return funcionarioRepositorio.save(funcionario);
     }
 }
