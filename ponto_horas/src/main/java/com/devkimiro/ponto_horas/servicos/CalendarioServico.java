@@ -33,6 +33,9 @@ public class CalendarioServico {
 
     public Calendario buscarCalendarioPorCracha (String cracha){
         List<Calendario> calendarioLista = calendarioRepositorio.findByCracha(cracha);
+        if(calendarioLista.isEmpty()){
+            throw new RuntimeException("Não foi possível encontrar este crachá no calendário!");
+        }
         int ultimoElemento = calendarioLista.size() -1;
         Calendario calendario = calendarioLista.get(ultimoElemento);
         return calendario;
