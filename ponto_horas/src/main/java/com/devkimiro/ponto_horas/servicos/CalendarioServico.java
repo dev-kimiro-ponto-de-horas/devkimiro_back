@@ -31,6 +31,13 @@ public class CalendarioServico {
         return calendario.get();
     }
 
+    public Calendario buscarCalendarioPorCracha (String cracha){
+        List<Calendario> calendarioLista = calendarioRepositorio.findByCracha(cracha);
+        int ultimoElemento = calendarioLista.size() -1;
+        Calendario calendario = calendarioLista.get(ultimoElemento);
+        return calendario;
+    }
+
     public Calendario atualizarCalendario(Calendario calendario, Long id) {
         Calendario calendarioAntigo = buscarCalendario(id);
         calendario.setId(calendarioAntigo.getId());
