@@ -1,6 +1,6 @@
 package com.devkimiro.ponto_horas.entidades;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,5 +38,5 @@ public class Cargo {
 
     @Column(name = "carga_horaria")
     @JsonFormat(pattern = "HH-mm-ss", shape = Shape.STRING)
-    private Time cargaHoraria;    
+    private LocalTime cargaHoraria;    
 }

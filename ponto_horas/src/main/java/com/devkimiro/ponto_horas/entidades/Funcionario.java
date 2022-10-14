@@ -49,4 +49,17 @@ public class Funcionario extends BaseUser {
         this.cracha = cracha;
         this.senha = senha;
     }
+
+    public Funcionario(Long id, @NotNull(message = "O nome não pode ser nulo!") String nome,
+            @NotNull(message = "O e-mail não pode estar vazio!") String email, Cargo cargo, Setor setor,
+            @NotBlank(message = "O crachá do funcionário não pode ser enviado em branco!") @NotNull(message = "O crachá do funcionário não pode ser vazio!") String cracha,
+            @NotBlank(message = "A senha do funcionário não pode ser enviado em branco!") @NotNull(message = "A senha do funcionário não pode ser vazia!") String senha,
+            List<Calendario> calendario) {
+        super(id, nome, email);
+        this.cargo = cargo;
+        this.setor = setor;
+        this.cracha = cracha;
+        this.senha = senha;
+        this.calendario = calendario;
+    }
 }

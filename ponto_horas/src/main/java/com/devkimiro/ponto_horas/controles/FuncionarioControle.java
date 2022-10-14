@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestDto;
 import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestUpdateDto;
 import com.devkimiro.ponto_horas.dto.response.FuncionarioResponseDto;
+import com.devkimiro.ponto_horas.dto.response.FuncionarioResponseHorasDto;
 import com.devkimiro.ponto_horas.entidades.Funcionario;
 import com.devkimiro.ponto_horas.mapeamento.MapeamentoFuncionario;
 import com.devkimiro.ponto_horas.servicos.FuncionarioServico;
@@ -116,12 +117,14 @@ public class FuncionarioControle {
     }
 
     @PostMapping("/ponto/inicio/{cracha}")
-    public ResponseEntity<Funcionario> baterPontoInicio (@PathVariable String cracha){
-        return ResponseEntity.ok(funcionarioServico.baterPontoInicio(cracha));
+    public ResponseEntity<FuncionarioResponseHorasDto> baterPontoInicio (@PathVariable String cracha){
+        Funcionario ponto = funcionarioServico.baterPontoInicio(cracha);
+        return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponseHoras(ponto));
     }
 
     @PostMapping("/ponto/saida/{cracha}")
-    public ResponseEntity<Funcionario> baterPontoSaida (@PathVariable String cracha){
-        return ResponseEntity.ok(funcionarioServico.baterPontoFinal(cracha));
+    public ResponseEntity<FuncionarioResponseHorasDto> baterPontoSaida (@PathVariable String cracha){
+        Funcionario ponto = funcionarioServico.baterPontoFinal(cracha);
+        return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponseHoras(ponto));
     }
 }
