@@ -1,7 +1,7 @@
 package com.devkimiro.ponto_horas.servicos;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,19 +51,19 @@ public class InicializacaoBanco implements CommandLineRunner {
 
     private void inicializaCargos(){
 
-        Cargo cargo1 = new Cargo(1L, "Analista Junior", 1500, LocalTime.of(8, 0, 0));
+        Cargo cargo1 = new Cargo(1L, "Analista Junior", 1500, Time.valueOf("8:00:00"));
 
-        Cargo cargo2 = new Cargo(2L, "RH Administrativo", 1000, LocalTime.of(8, 0, 0));
+        Cargo cargo2 = new Cargo(2L, "RH Administrativo", 1000, Time.valueOf("8:00:00"));
 
-        Cargo cargo3 = new Cargo(3L, "Técnico em Manutenção", 1600, LocalTime.of(8, 0, 0));
+        Cargo cargo3 = new Cargo(3L, "Técnico em Manutenção", 1600, Time.valueOf("8:00:00"));
 
-        Cargo cargo4 = new Cargo(4L, "Analista Senior", 5000, LocalTime.of(8, 0, 0));
+        Cargo cargo4 = new Cargo(4L, "Analista Senior", 5000, Time.valueOf("8:00:00"));
 
-        Cargo cargo5 = new Cargo(5L, "Engenheiro Civil", 3500, LocalTime.of(8, 0, 0));
+        Cargo cargo5 = new Cargo(5L, "Engenheiro Civil", 3500, Time.valueOf("8:00:00"));
 
-        Cargo cargo6 = new Cargo(6L, "Operador de Máquina", 2600, LocalTime.of(8, 0, 0));
+        Cargo cargo6 = new Cargo(6L, "Operador de Máquina", 2600, Time.valueOf("8:00:00"));
 
-        Cargo cargo7 = new Cargo(6L, "Aprendiz", 1000, LocalTime.of(6, 0, 0));
+        Cargo cargo7 = new Cargo(6L, "Aprendiz", 1000, Time.valueOf("8:00:00"));
 
         cargoRepositorio.save(cargo1);
         cargoRepositorio.save(cargo2);
