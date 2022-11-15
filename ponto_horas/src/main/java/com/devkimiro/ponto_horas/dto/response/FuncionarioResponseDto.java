@@ -11,8 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FuncionarioResponseDto {
     
+    private Long id;
     private String nome;
     private String email;
     private String nomeCargo;
+    private String nomeSetor;
 
 }
