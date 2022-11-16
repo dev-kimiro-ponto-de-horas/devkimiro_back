@@ -5,11 +5,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.devkimiro.ponto_horas.entidades.Calendario;
 import com.devkimiro.ponto_horas.entidades.Cargo;
@@ -22,8 +20,7 @@ import com.devkimiro.ponto_horas.repositorios.FuncionarioRepositorio;
 import com.devkimiro.ponto_horas.repositorios.SetorRepositorio;
 import com.devkimiro.ponto_horas.repositorios.UsuarioSistemaRepositorio;
 
-@Component
-@Transactional
+@Service
 public class InicializacaoBanco implements CommandLineRunner {
     
     @Autowired
@@ -63,7 +60,7 @@ public class InicializacaoBanco implements CommandLineRunner {
 
         Cargo cargo6 = new Cargo(6L, "Operador de Máquina", 2600, Time.valueOf("8:00:00"));
 
-        Cargo cargo7 = new Cargo(6L, "Aprendiz", 1000, Time.valueOf("8:00:00"));
+        Cargo cargo7 = new Cargo(7L, "Aprendiz", 1000, Time.valueOf("8:00:00"));
 
         cargoRepositorio.save(cargo1);
         cargoRepositorio.save(cargo2);
@@ -111,7 +108,7 @@ public class InicializacaoBanco implements CommandLineRunner {
         List<Calendario> lista1 = new ArrayList<>();
         lista1.add(calendario1);
         lista1.add(calendario4);
-       
+
         Funcionario funcionario1 = new Funcionario(1L, "Thiago Funcionário", "thiago.funcionario@hotmail.com", cargoRepositorio.findById(4L).get(), setorRepositorio.findById(1L).get(), "111111", "123", lista1);
 
         List<Calendario> lista2 = new ArrayList<>();
