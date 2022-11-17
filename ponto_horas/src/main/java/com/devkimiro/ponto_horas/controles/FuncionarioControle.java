@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestDto;
+import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestUpdateAdminDto;
 import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestUpdateDto;
 import com.devkimiro.ponto_horas.dto.response.FuncionarioResponseDto;
 import com.devkimiro.ponto_horas.dto.response.FuncionarioResponseHorasDto;
@@ -99,7 +100,7 @@ public class FuncionarioControle {
     }
 
     @PutMapping("/admin/{cracha}")
-    public ResponseEntity<FuncionarioResponseDto> atualizarFuncionarioAdmin (@Valid FuncionarioRequestDto funcionario,@PathVariable String cracha){
+    public ResponseEntity<FuncionarioResponseDto> atualizarFuncionarioAdmin (@Valid @RequestBody FuncionarioRequestUpdateAdminDto funcionario, @PathVariable String cracha){
         try{
             Funcionario funcionarioAtualizado = funcionarioServico.atualizarFuncionarioAdmin(funcionario, cracha);
             return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponse(funcionarioAtualizado));
