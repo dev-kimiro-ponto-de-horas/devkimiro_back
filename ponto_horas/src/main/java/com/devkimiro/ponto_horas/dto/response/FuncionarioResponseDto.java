@@ -16,5 +16,6 @@ public class FuncionarioResponseDto {
     private String email;
     private String nomeCargo;
     private String nomeSetor;
+    private String cracha;
 
 }
