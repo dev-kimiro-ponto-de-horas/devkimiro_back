@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestDto;
+import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestUpdateAdminDto;
 import com.devkimiro.ponto_horas.dto.request.FuncionarioRequestUpdateDto;
 import com.devkimiro.ponto_horas.entidades.Calendario;
 import com.devkimiro.ponto_horas.entidades.Cargo;
@@ -75,7 +76,7 @@ public class FuncionarioServico {
         return funcionarioRepositorio.save(funcionario);
     }
 
-    public Funcionario atualizarFuncionarioAdmin (FuncionarioRequestDto funcionarioDto, String cracha){
+    public Funcionario atualizarFuncionarioAdmin (FuncionarioRequestUpdateAdminDto funcionarioDto, String cracha){
         Funcionario funcionario = buscarFuncionarioPorCracha(cracha);
         Setor setor = setorServico.buscarSetorPorNome(funcionarioDto.getNomeSetor());
         Cargo cargo = cargoServico.buscarCargoPorNome(funcionarioDto.getNomeCargo());
