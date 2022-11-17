@@ -128,9 +128,9 @@ public class InicializacaoBanco implements CommandLineRunner {
 
     private void inicializaUsuarioSistema(){
 
-        UsuarioSistema usuario1 = new UsuarioSistema(1L, "Thiago Usuário", "thiago.usuario@hotmail.com", "thirbt", "123");
+        UsuarioSistema usuario1 = new UsuarioSistema(4L, "Thiago Usuário", "thiago.usuario@hotmail.com", "thirbt", "123");
 
-        UsuarioSistema usuario2 = new UsuarioSistema(2L, "Vitor Usuário", "vitor.usuario@hotmail.com", "vitor_mota", "321");
+        UsuarioSistema usuario2 = new UsuarioSistema(5L, "Vitor Usuário", "vitor.usuario@hotmail.com", "vitor_mota", "321");
 
         usuarioSistemaRepositorio.save(usuario1);
         usuarioSistemaRepositorio.save(usuario2);
