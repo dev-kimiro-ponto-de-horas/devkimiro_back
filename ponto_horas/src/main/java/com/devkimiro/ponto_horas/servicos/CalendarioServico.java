@@ -1,5 +1,6 @@
 package com.devkimiro.ponto_horas.servicos;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,11 +43,16 @@ public class CalendarioServico {
     }
 
     public List<Calendario> buscarTodosCalendariosPorCracha (String cracha){
-        List<Calendario> calendarioLista = calendarioRepositorio.findByCracha(cracha);
-        if(calendarioLista.isEmpty()){
-            throw new RuntimeException("Não foi possível encontrar o crachá no calendário!");
+        List<Calendario> calendarioEncontrado = calendarioRepositorio.findAll();
+        if(calendarioEncontrado.isEmpty())
+            throw new RuntimeException("Calendario não encontrado!");
+        List<Calendario> calendarioNovo = new ArrayList<>();
+        for (Calendario calendario : calendarioEncontrado) {
+            if(calendario.getCracha().equals(cracha)) {
+                calendarioNovo.add(calendario);
+            } 
         }
-        return calendarioLista;
+        return calendarioNovo;
     }
 
     public Calendario atualizarCalendario(Calendario calendario, Long id) {

@@ -130,4 +130,10 @@ public class FuncionarioControle {
         Funcionario ponto = funcionarioServico.baterPontoFinal(cracha);
         return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponseHoras(ponto));
     }
+    
+    @GetMapping("/login/{cracha}/{senha}")
+    public ResponseEntity<String> logarFuncionario (@PathVariable String cracha, @PathVariable String senha){
+        String funcionario = funcionarioServico.loginFuncionario(cracha, senha);
+        return ResponseEntity.ok(funcionario);
+    }
 }

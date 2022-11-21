@@ -107,4 +107,13 @@ public class FuncionarioServico {
         calendarioServico.criarCalendario(calendario);
         return funcionarioRepositorio.save(funcionario);
     }
+
+    public String loginFuncionario(String cracha, String senha){
+        Optional<Funcionario> funcionarioEncontrado = funcionarioRepositorio.findByCracha(cracha);
+        if(funcionarioEncontrado.isEmpty()){
+            throw new RuntimeException("Crachá não encontrado!");
+        }
+        Funcionario funcionario = funcionarioEncontrado.get();
+        return funcionario.getCracha();
+    }
 }
