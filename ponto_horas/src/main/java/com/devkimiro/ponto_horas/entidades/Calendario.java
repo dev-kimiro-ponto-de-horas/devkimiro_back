@@ -30,7 +30,7 @@ public class Calendario {
     private Long id;
     
     @Column(name = "hora_entrada")
-    @JsonFormat(pattern = "dd-MM-yyyy HH-mm-ss", shape = Shape.STRING)
+    @JsonFormat(pattern = "dd/MM/yy HH:mm", shape = Shape.STRING)
     private LocalDateTime horaEntrada;
 
     @Column(name = "hora_saida")
