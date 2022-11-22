@@ -108,4 +108,10 @@ public class UsuarioSistemaControle {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/login/{login}/{senha}")
+    public ResponseEntity<String> logarUsuario (@PathVariable String login, String senha){
+        String usuario = usuarioSistemaServico.loginUsuarioSistema(login, senha);
+        return ResponseEntity.ok(usuario);
+    }
 }

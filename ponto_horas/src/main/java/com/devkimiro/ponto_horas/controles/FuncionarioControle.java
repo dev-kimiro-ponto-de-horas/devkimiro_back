@@ -132,7 +132,7 @@ public class FuncionarioControle {
     }
     
     @GetMapping("/login/{cracha}/{senha}")
-    public ResponseEntity<String> logarFuncionario (@PathVariable String cracha, @PathVariable String senha){
+    public ResponseEntity<String> logarFuncionario (@PathVariable String cracha, String senha){
         String funcionario = funcionarioServico.loginFuncionario(cracha, senha);
         return ResponseEntity.ok(funcionario);
     }

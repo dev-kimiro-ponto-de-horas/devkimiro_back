@@ -34,7 +34,7 @@ public class Calendario {
     private LocalDateTime horaEntrada;
 
     @Column(name = "hora_saida")
-    @JsonFormat(pattern = "dd-MM-yyyy HH-mm-ss", shape = Shape.STRING)
+    @JsonFormat(pattern = "dd/MM/yy HH:mm", shape = Shape.STRING)
     private LocalDateTime horaSaida;
 
     @NotBlank(message = "O crachá do funcionário não pode ser enviado em branco!")

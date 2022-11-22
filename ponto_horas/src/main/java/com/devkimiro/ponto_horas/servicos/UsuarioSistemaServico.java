@@ -63,5 +63,13 @@ public class UsuarioSistemaServico {
     public void deletarUsuario (Long id){
         usuarioSistemaRepositorio.deleteById(id);
     }
+
+    public String loginUsuarioSistema(String login, String senha){
+        Optional<UsuarioSistema> usuarioEncontrado = usuarioSistemaRepositorio.findByLogin(login);
+        if(usuarioEncontrado.isEmpty())
+            throw new RuntimeException("Login não encontrado!");
+        UsuarioSistema usuario = usuarioEncontrado.get();
+        return usuario.getLogin();
+    }
     
 }
