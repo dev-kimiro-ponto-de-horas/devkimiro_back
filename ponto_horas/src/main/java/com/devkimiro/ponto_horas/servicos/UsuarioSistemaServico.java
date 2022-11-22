@@ -64,12 +64,11 @@ public class UsuarioSistemaServico {
         usuarioSistemaRepositorio.deleteById(id);
     }
 
-    public String loginUsuarioSistema(String login, String senha){
+    public String loginUsuarioSistema(String login){
         Optional<UsuarioSistema> usuarioEncontrado = usuarioSistemaRepositorio.findByLogin(login);
         if(usuarioEncontrado.isEmpty())
             throw new RuntimeException("Login não encontrado!");
         UsuarioSistema usuario = usuarioEncontrado.get();
-        return usuario.getLogin();
+        return usuario.getEmail();
     }
-    
 }

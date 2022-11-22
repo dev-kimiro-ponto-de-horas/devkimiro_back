@@ -109,9 +109,9 @@ public class UsuarioSistemaControle {
         }
     }
 
-    @GetMapping("/login/{login}/{senha}")
-    public ResponseEntity<String> logarUsuario (@PathVariable String login, String senha){
-        String usuario = usuarioSistemaServico.loginUsuarioSistema(login, senha);
+    @GetMapping("/login/adm/{login}")
+    public ResponseEntity<String> logarUsuario (@PathVariable String login){
+        String usuario = usuarioSistemaServico.loginUsuarioSistema(login);
         return ResponseEntity.ok(usuario);
     }
 }
