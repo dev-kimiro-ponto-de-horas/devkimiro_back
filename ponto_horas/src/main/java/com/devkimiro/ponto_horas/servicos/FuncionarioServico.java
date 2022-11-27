@@ -108,7 +108,7 @@ public class FuncionarioServico {
         return funcionarioRepositorio.save(funcionario);
     }
 
-    public String loginFuncionario(String cracha, String senha){
+    public String loginFuncionario(String cracha){
         Optional<Funcionario> funcionarioEncontrado = funcionarioRepositorio.findByCracha(cracha);
         if(funcionarioEncontrado.isEmpty())
             throw new RuntimeException("Crachá não encontrado!");

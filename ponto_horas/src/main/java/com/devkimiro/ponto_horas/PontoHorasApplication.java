@@ -9,5 +9,4 @@ public class PontoHorasApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PontoHorasApplication.class, args);
 	}
-
 }

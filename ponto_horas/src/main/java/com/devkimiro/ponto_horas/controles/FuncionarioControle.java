@@ -131,9 +131,9 @@ public class FuncionarioControle {
         return ResponseEntity.ok(MapeamentoFuncionario.deFuncionarioParaResponseHoras(ponto));
     }
     
-    @GetMapping("/login/{cracha}/{senha}")
-    public ResponseEntity<String> logarFuncionario (@PathVariable String cracha, String senha){
-        String funcionario = funcionarioServico.loginFuncionario(cracha, senha);
+    @GetMapping("/login/{cracha}")
+    public ResponseEntity<String> logarFuncionario (@PathVariable String cracha){
+        String funcionario = funcionarioServico.loginFuncionario(cracha);
         return ResponseEntity.ok(funcionario);
     }
 }

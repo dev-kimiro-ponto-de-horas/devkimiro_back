@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.devkimiro.ponto_horas.entidades.Setor;
@@ -12,6 +13,6 @@ import com.devkimiro.ponto_horas.entidades.Setor;
 public interface SetorRepositorio extends JpaRepository<Setor, Long> {
 
     @Query(value = "SELECT u FROM Setor u WHERE nomeSetor = :nomeSetor")
-    Optional<Setor> findByNomeSetor(String nomeSetor);
+    Optional<Setor> findByNomeSetor(@Param("nomeSetor") String nomeSetor);
     
 }
